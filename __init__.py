@@ -24,13 +24,20 @@ def getSensors():
         arr = []
 
         for s in root.find (family="28"): 
-            cbpi.app.logger.info("Device Found")
+            cbpi.app.logger.info("Device 28 on owfs Found")
             cbpi.app.logger.info("Address: %s" % s.get("address"))
             cbpi.app.logger.info("Family: %s" % s.get("family"))
             cbpi.app.logger.info("ID: %s" % s.get("id"))
             cbpi.app.logger.info("Type: %s" % s.get("type"))
             cbpi.app.logger.info(" ")
-            ##if (sensor.address.startswith("28") or sensor.address.startswith("10")):
+            arr.append(s.get("address"))
+        for s in root.find (family="10"): 
+            cbpi.app.logger.info("Device 10 on owfs Found")
+            cbpi.app.logger.info("Address: %s" % s.get("address"))
+            cbpi.app.logger.info("Family: %s" % s.get("family"))
+            cbpi.app.logger.info("ID: %s" % s.get("id"))
+            cbpi.app.logger.info("Type: %s" % s.get("type"))
+            cbpi.app.logger.info(" ")
             arr.append(s.get("address"))
         return arr
     except:
@@ -58,7 +65,7 @@ class myThread (threading.Thread):
 
         while self.runnig:
             try:
-                app.logger.info("READ OWFS TEMP %s" % (self.sensor_name))
+                ##app.logger.info("READ OWFS TEMP %s" % (self.sensor_name))
                 ## Test Mode
                 if self.sensor_name is None:
                     self.value = 0     ##sensor.temperature
@@ -66,13 +73,10 @@ class myThread (threading.Thread):
                     break
                 
                 x=root.find(address=self.sensor_name)[0]
-                print(x.get("temperature"))
-                temp=float(x.get("temperature"))
-                self.value = temp
-                app.logger.info("READ OWFS TEMP %s; temp: %04f" % (self.sensor_name, temp))
-                ##        if (content.split('\n')[0].split(' ')[11] == "YES"):
-                ##            temp = float(content.split("=")[-1]) / 1000  # temp in Celcius
-                ##        break
+                x.use_cache (0)
+                self.value = float(x.get("temperature"))
+
+                app.logger.info("READ OWFS TEMP %s; temp: %04f" % (self.sensor_name, self.value))
             except:
                 pass
 
