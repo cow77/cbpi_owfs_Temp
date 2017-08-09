@@ -24,21 +24,21 @@ def getSensors():
         arr = []
 
         for s in root.find (family="28"): 
-            cbpi.app.logger.info("Device 28 on owfs Found")
-            cbpi.app.logger.info("Address: %s" % s.get("address"))
-            cbpi.app.logger.info("Family: %s" % s.get("family"))
-            cbpi.app.logger.info("ID: %s" % s.get("id"))
-            cbpi.app.logger.info("Type: %s" % s.get("type"))
-            cbpi.app.logger.info(" ")
-            arr.append(s.get("address"))
+            dirname = s.get("address")
+            if dirname in arr:
+                ##cbpi.app.logger.info("Device %s Found (Thermometer on owfs); double entry: skipped." % dirname)
+                pass
+            else:
+                cbpi.app.logger.info("Device %s Found (Family: %s, ID: %s, Type: %s, Thermometer on owfs)" % ( s.get("address"), s.get("family"), s.get("id"), s.get("type") ))
+                arr.append(s.get("address"))
         for s in root.find (family="10"): 
-            cbpi.app.logger.info("Device 10 on owfs Found")
-            cbpi.app.logger.info("Address: %s" % s.get("address"))
-            cbpi.app.logger.info("Family: %s" % s.get("family"))
-            cbpi.app.logger.info("ID: %s" % s.get("id"))
-            cbpi.app.logger.info("Type: %s" % s.get("type"))
-            cbpi.app.logger.info(" ")
-            arr.append(s.get("address"))
+            dirname = s.get("address")
+            if dirname in arr:
+                ##cbpi.app.logger.info("Device %s Found (Thermometer on owfs); double entry: skipped." % dirname)
+                pass
+            else:
+                cbpi.app.logger.info("Device %s Found (Family: %s, ID: %s, Type: %s, Thermometer on owfs)" % ( s.get("address"), s.get("family"), s.get("id"), s.get("type") ))
+                arr.append(s.get("address"))
         return arr
     except:
         return []
