@@ -9,7 +9,7 @@ import os, re, threading, time
 from flask import Blueprint, render_template, request
 from modules.core.props import Property
 
-from pyowfs import Connection
+from .pyowfs import Connection
 
 blueprint = Blueprint('one_wire_owfs', __name__)
 
